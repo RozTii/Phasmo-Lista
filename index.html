@@ -9,7 +9,6 @@
       background-color: #000;
       color: white;
       font-family: Arial, sans-serif;
-      margin: 0;
       padding: 20px;
     }
 
@@ -20,7 +19,7 @@
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
       gap: 20px;
       max-width: 1200px;
       margin: auto;
@@ -33,7 +32,6 @@
 
     .ghost img {
       width: 100%;
-      display: block;
       border-radius: 6px;
     }
 
@@ -56,54 +54,57 @@
     .ghost.checked::after {
       display: block;
     }
-
-    button {
-      display: block;
-      margin: 30px auto;
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-    }
   </style>
 </head>
 <body>
 
 <h1>Phasmophobia – Fantasmas</h1>
 
-<div class="grid" id="ghostGrid"></div>
+<div class="grid">
 
-<button onclick="resetList()">Resetear lista</button>
+  <div class="ghost"><img src="/Phasmo-Lista/img/banshee.png"></div>
+  <div class="ghost"><img src="/Phasmo-Lista/img/demonio.png"></div>
+  <div class="ghost"><img src="/Phasmo-Lista/img/ente.png"></div>
+  <div class="ghost"><img src="/Phasmo-Lista/img/espectro.png"></div>
+  <div class="ghost"><img src="/Phasmo-Lista/img/espiritu.png"></div>
+  <div class="ghost"><img src="/Phasmo-Lista/img/gallu.png"></div>
+  <div class="ghost"><img src="/Phasmo-Lista/img/gemelos.png"></div>
+  <div class="ghost"><img src="/Phasmo-Lista/img/goryo.png"></div>
+  <div class="ghost"><img src="/Phasmo-Lista/img/hantu.png"></div>
+  <div class="ghost"><img src="/Phasmo-Lista/img/jinn.png"></div>
+  <div class="ghost"><img src="/Phasmo-Lista/img/mimico.png"></div>
+  <div class="ghost"><img src="/Phasmo-Lista/img/moroi.png"></div>
+  <div class="ghost"><img src="/Phasmo-Lista/img/myling.png"></div>
+  <div class="ghost"><img src="/Phasmo-Lista/img/obake.png"></div>
+  <div class="ghost"><img src="/Phasmo-Lista/img/obambo.png"></div>
+  <div class="ghost"><img src="/Phasmo-Lista/img/oni.png"></div>
+  <div class="ghost"><img src="/Phasmo-Lista/img/onryo.png"></div>
+  <div class="ghost"><img src="/Phasmo-Lista/img/pesadilla.png"></div>
+  <div class="ghost"><img src="/Phasmo-Lista/img/poltergeist.png"></div>
+  <div class="ghost"><img src="/Phasmo-Lista/img/raiju.png"></div>
+  <div class="ghost"><img src="/Phasmo-Lista/img/revenant.png"></div>
+  <div class="ghost"><img src="/Phasmo-Lista/img/sombra.png"></div>
+  <div class="ghost"><img src="/Phasmo-Lista/img/thaye.png"></div>
+  <div class="ghost"><img src="/Phasmo-Lista/img/yokai.png"></div>
+  <div class="ghost"><img src="/Phasmo-Lista/img/yurei.png"></div>
+  <div class="ghost"><img src="/Phasmo-Lista/img/deogen.png"></div>
+  <div class="ghost"><img src="/Phasmo-Lista/img/dayan.png"></div>
+
+</div>
 
 <script>
-  const ghosts = [
-    "banshee","demonio","hantu","moroi","obambo","ente","revenant","thaye","espectro",
-    "dayan","gallu","jinn","myling","oni","poltergeist","sombra","mimico","yokai",
-    "deogen","goryo","pesadilla","obake","onryo","raiju","espiritu","gemelos","yurei"
-  ];
+  document.querySelectorAll(".ghost").forEach((ghost, index) => {
+    const key = "phasmo_" + index;
 
-  const grid = document.getElementById("ghostGrid");
-  const saved = JSON.parse(localStorage.getItem("phasmo")) || {};
+    if (localStorage.getItem(key) === "true") {
+      ghost.classList.add("checked");
+    }
 
-  ghosts.forEach(name => {
-    const div = document.createElement("div");
-    div.className = "ghost";
-    if (saved[name]) div.classList.add("checked");
-
-    div.innerHTML = `<img src="img/${name}.png" alt="${name}">`;
-
-    div.onclick = () => {
-      div.classList.toggle("checked");
-      saved[name] = div.classList.contains("checked");
-      localStorage.setItem("phasmo", JSON.stringify(saved));
+    ghost.onclick = () => {
+      ghost.classList.toggle("checked");
+      localStorage.setItem(key, ghost.classList.contains("checked"));
     };
-
-    grid.appendChild(div);
   });
-
-  function resetList() {
-    localStorage.removeItem("phasmo");
-    location.reload();
-  }
 </script>
 
 </body>
