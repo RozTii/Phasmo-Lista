@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Phasmophobia – Fantasmas</title>
+
+<style>
+body {
+  margin: 0;
+  background: transparent;
+  font-family: Arial, sans-serif;
+}
+
+#ghosts {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 15px;
+  padding: 20px;
+}
+
+.ghost {
+  position: relative;
+  cursor: pointer;
+}
+
+.ghost img {
+  width: 100%;
+  display: block;
+  border-radius: 8px;
+}
+
+.ghost.done img {
+  filter: grayscale(100%) brightness(0.5);
+}
+
+/* X roja */
+.ghost::after {
+  content: "✕";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 72px;
+  color: red;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ghost.done::after {
+  opacity: 0.9;
+}
+</style>
+</head>
+
+<body>
+
+<div id="ghosts"></div>
+
+<script>
+const ghosts = [
+  "banshee","demonio","hantu","moroi","obambo","ente","revenant",
+  "thaye","espectro","dayan","gallu","jinn","myling","oni",
+  "poltergeist","sombra","mimico","yokai","deogen","goryo",
+  "pesadilla","obake","onryo","raiju","espiritu","gemelos","yurei"
+];
+
+const container = document.getElementById("ghosts");
+
+ghosts.forEach(name => {
+  const div = document.createElement("div");
+  div.className = "ghost";
+
+  const img = document.createElement("img");
+  img.src = `img/${name}.png`;
+  img.alt = name;
+
+  div.appendChild(img);
+  div.onclick = () => div.classList.toggle("done");
+
+  container.appendChild(div);
+});
+</script>
+
+</body>
+</html>
