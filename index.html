@@ -1,84 +1,109 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Phasmophobia – Fantasmas</title>
+  <meta charset="UTF-8">
+  <title>Phasmophobia – Lista de Fantasmas</title>
 
-<style>
-body {
-  margin: 0;
-  background: transparent;
-  font-family: Arial, sans-serif;
-}
+  <style>
+    body {
+      background-color: #000;
+      color: white;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
 
-#ghosts {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 15px;
-  padding: 20px;
-}
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
 
-.ghost {
-  position: relative;
-  cursor: pointer;
-}
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
 
-.ghost img {
-  width: 100%;
-  display: block;
-  border-radius: 8px;
-}
+    .ghost {
+      position: relative;
+      cursor: pointer;
+    }
 
-.ghost.done img {
-  filter: grayscale(100%) brightness(0.5);
-}
+    .ghost img {
+      width: 100%;
+      display: block;
+      border-radius: 6px;
+    }
 
-/* X roja */
-.ghost::after {
-  content: "✕";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 72px;
-  color: red;
-  opacity: 0;
-  pointer-events: none;
-}
+    .ghost.checked img {
+      filter: grayscale(100%) brightness(40%);
+    }
 
-.ghost.done::after {
-  opacity: 0.9;
-}
-</style>
+    .ghost::after {
+      content: "✖";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 80px;
+      color: red;
+      display: none;
+      pointer-events: none;
+    }
+
+    .ghost.checked::after {
+      display: block;
+    }
+
+    button {
+      display: block;
+      margin: 30px auto;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
 </head>
-
 <body>
 
-<div id="ghosts"></div>
+<h1>Phasmophobia – Fantasmas</h1>
+
+<div class="grid" id="ghostGrid"></div>
+
+<button onclick="resetList()">Resetear lista</button>
 
 <script>
-const ghosts = [
-  "banshee","demonio","hantu","moroi","obambo","ente","revenant",
-  "thaye","espectro","dayan","gallu","jinn","myling","oni",
-  "poltergeist","sombra","mimico","yokai","deogen","goryo",
-  "pesadilla","obake","onryo","raiju","espiritu","gemelos","yurei"
-];
+  const ghosts = [
+    "banshee","demonio","hantu","moroi","obambo","ente","revenant","thaye","espectro",
+    "dayan","gallu","jinn","myling","oni","poltergeist","sombra","mimico","yokai",
+    "deogen","goryo","pesadilla","obake","onryo","raiju","espiritu","gemelos","yurei"
+  ];
 
-const container = document.getElementById("ghosts");
+  const grid = document.getElementById("ghostGrid");
+  const saved = JSON.parse(localStorage.getItem("phasmo")) || {};
 
-ghosts.forEach(name => {
-  const div = document.createElement("div");
-  div.className = "ghost";
+  ghosts.forEach(name => {
+    const div = document.createElement("div");
+    div.className = "ghost";
+    if (saved[name]) div.classList.add("checked");
 
-  const img = document.createElement("img");
-  img.src = `img/${name}.png`;
-  img.alt = name;
+    div.innerHTML = `<img src="img/${name}.png" alt="${name}">`;
 
-  div.appendChild(img);
-  div.onclick = () => div.classList.toggle("done");
+    div.onclick = () => {
+      div.classList.toggle("checked");
+      saved[name] = div.classList.contains("checked");
+      localStorage.setItem("phasmo", JSON.stringify(saved));
+    };
 
-  container.appendChild(div);
-});
+    grid.appendChild(div);
+  });
+
+  function resetList() {
+    localStorage.removeItem("phasmo");
+    location.reload();
+  }
 </script>
 
 </body>
