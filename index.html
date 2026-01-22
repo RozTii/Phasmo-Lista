@@ -235,8 +235,6 @@ html, body {
 
 </div>
 
-<img id="logroImagen" src="img/imagen_logro.png" alt="¡Logro!">
-
 <audio id="clickSound" src="img/click.mp3" preload="auto"></audio>
 
 <script>
@@ -281,7 +279,6 @@ html, body {
   function updateCounter() {
     const checked = document.querySelectorAll(".ghost.checked").length;
     const winSound = new Audio('img/logro.mp3');
-    const logroImagen = document.getElementById("logroImagen");
 
     document.querySelectorAll('.gold-particle').forEach(p => p.remove());
 
@@ -289,8 +286,6 @@ html, body {
     counter.textContent = "¡Todos los fantasmas encontrados!";
     counter.style.color = "#FFD700"; // dorado brillante
     winSound.play();
-
-    logroImagen.style.display = 'block';
 
     for (let i = 0; i < 50; i++) {
       const p = document.createElement("div");
@@ -309,7 +304,6 @@ html, body {
     counter.textContent = `${checked} de 27 Fantasmas`;
     counter.style.color = "white";
     // ocultar imagen y borrar partículas si no está completo
-    logroImagen.style.display = 'none';
     document.querySelectorAll('.gold-particle').forEach(p => p.remove());
   }
 }
