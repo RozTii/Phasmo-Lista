@@ -71,7 +71,7 @@
       100% { transform: translate(0, 0); }
     }
     
-    .shake {
+    #page.shake {
       animation: shake 0.3s;
     }
 
@@ -90,6 +90,8 @@
   </style>
 </head>
 <body>
+
+<div id="page">
 
 <h1>Phasmophobia Fantasmas</h1>
 
@@ -122,6 +124,7 @@
   <div class="ghost"><img src="/Phasmo-Lista/img/yurei.png"></div>
   <div class="ghost"><img src="/Phasmo-Lista/img/deogen.png"></div>
   <div class="ghost"><img src="/Phasmo-Lista/img/dayan.png"></div>
+</div>
 
 </div>
 
@@ -129,6 +132,7 @@
 
 <script>
   const clickSound = document.getElementById("clickSound");
+  const page = document.getElementById("page");
   
   document.querySelectorAll(".ghost").forEach((ghost, index) => {
     const key = "phasmo_" + index;
@@ -144,9 +148,9 @@
       clickSound.currentTime = 0;
       clickSound.play();
 
-      document.body.classList.add("shake");
+      page.classList.add("shake");
       setTimeout(() => {
-        document.body.classList.remove("shake");
+        page.classList.remove("shake");
       }, 300);
     };
   });
