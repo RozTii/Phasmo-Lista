@@ -164,14 +164,25 @@ html, body {
        50% { opacity: 1; filter: drop-shadow(0 0 8px white); }
      }
     
+     @keyframes parpadeoRelampago {
+       0% { background-color: rgba(0,0,0,0); }
+       10% { background-color: rgba(0,0,0,0.7); }
+       20% { background-color: rgba(0,0,0,0); }
+       30% { background-color: rgba(0,0,0,0.7); }
+       40% { background-color: rgba(0,0,0,0); }
+       50% { background-color: rgba(0,0,0,0.7); }
+       60% { background-color: rgba(0,0,0,0); }
+       70% { background-color: rgba(0,0,0,0.7); }
+       80% { background-color: rgba(0,0,0,0); }
+       100% { background-color: rgba(0,0,0,0); }
+     }
+
      body.parpadeo {
-       background-color: rgba(0,0,0,0.7); /* oscurece el fondo */
-       transition: background-color 0.3s;
+       animation: parpadeoRelampago 5s linear;
      }
 
      body.parpadeo .ghost img {
-       opacity: 0.3; /* fantasmas más transparentes */
-       transition: opacity 0.3s;
+       animation: parpadeoRelampago 5s linear;
      }
   </style>
 </head>
@@ -302,7 +313,7 @@ html, body {
     document.body.classList.add("parpadeo");
     setTimeout(() => {
       document.body.classList.remove("parpadeo");
-    }, 3000); // dura 3 segundos
+    }, 5000); // dura 3 segundos
   }
 
   setInterval(parpadeo, 30000);
