@@ -336,12 +336,15 @@ html, body {
   const resetButton = document.getElementById("resetButton");
   const screenshotButton = document.getElementById("screenshotButton");
 
-  document.getElementById('screenshotButton').addEventListener('click', function () {
-      html2canvas(document.body).then(function (canvas) {
-          var link = document.createElement('a');
-          link.download = 'screenshot.png'; 
-          link.href = canvas.toDataURL('image/png'); 
-          link.click();
+  screenshotButton.addEventListener("click", () => {
+    html2canvas(document.querySelector("#page"), {
+      useCORS: true,
+      backgroundColor: null
+  }).then(canvas => {
+     const link = document.createElement("a");
+     link.download = "phasmo_fantasmas.png";
+     link.href = canvas.toDataURL("image/png");
+     link.click();
   });
 });
 
