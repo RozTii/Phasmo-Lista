@@ -163,6 +163,36 @@ html, body {
        0%, 100% { opacity: 0.3; filter: drop-shadow(0 0 0px white); }
        50% { opacity: 1; filter: drop-shadow(0 0 8px white); }
      }
+
+     .gold-particle {
+       position: fixed;
+       top: 100%;
+       border-radius: 50%;
+       background: gold;
+       width: 6px;
+       height: 6px;
+       pointer-events: none;
+       animation: floatUpGold linear infinite;
+       z-index: 1000;
+     }
+
+     @keyframes floatUpGold {
+       0% { transform: translateY(0) scale(1); opacity: 0; }
+       20% { opacity: 1; }
+       100% { transform: translateY(-110vh) scale(0.5); opacity: 0; }
+     }
+
+     #logroImagen {
+       position: fixed;
+       top: 50%;
+       left: 50%;
+       transform: translate(-50%, -50%);
+       z-index: 1001;
+       display: none;
+       max-width: 300px;
+       max-height: 300px;
+       pointer-events: none;
+     }
   </style>
 </head>
 <body>
@@ -204,6 +234,8 @@ html, body {
 </div>
 
 </div>
+
+<img id="logroImagen" src="img/imagen_logro.png" alt="¡Logro!">
 
 <audio id="clickSound" src="img/click.mp3" preload="auto"></audio>
 
@@ -249,14 +281,36 @@ html, body {
   function updateCounter() {
     const checked = document.querySelectorAll(".ghost.checked").length;
     const winSound = new Audio('img/logro.mp3');
+    const logroImagen = document.getElementById("logroImagen");
+
+    document.querySelectorAll('.gold-particle').forEach(p => p.remove());
 
     if (checked === 27) {
     counter.textContent = "¡Todos los fantasmas encontrados!";
     counter.style.color = "#FFD700"; // dorado brillante
     winSound.play();
+
+    logroImagen.style.display = 'block';
+
+    for (let i = 0; i < 50; i++) {
+      const p = document.createElement("div");
+      p.classList.add("gold-particle");
+      p.style.left = Math.random() * 100 + "%";
+      const size = Math.random() * 6 + 4;
+      p.style.width = size + "px";
+      p.style.height = size + "px";
+      const duration = Math.random() * 5 + 5;
+      p.style.animationDuration = duration + "s";
+      p.style.animationDelay = Math.random() * 2 + "s";
+      document.body.appendChild(p);
+    }
+    
   } else {
     counter.textContent = `${checked} de 27 Fantasmas`;
-    counter.style.color = "white"; // color normal
+    counter.style.color = "white";
+    // ocultar imagen y borrar partículas si no está completo
+    logroImagen.style.display = 'none';
+    document.querySelectorAll('.gold-particle').forEach(p => p.remove());
   }
 }
   
