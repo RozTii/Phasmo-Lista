@@ -159,6 +159,11 @@ html, body {
       10% { opacity: 0.3; }
       100% { transform: translateY(-110vh) scale(0.5); opacity: 0; }
      }
+    
+     @keyframes glow {
+       0%, 100% { opacity: 0.3; filter: drop-shadow(0 0 0px white); }
+       50% { opacity: 1; filter: drop-shadow(0 0 8px white); }
+     }
   </style>
 </head>
 <body>
@@ -230,6 +235,14 @@ html, body {
 
     // retraso aleatorio
     p.style.animationDelay = Math.random() * 15 + "s";
+
+    // 20% de las partículas brillarán
+    if (Math.random() < 0.2) { 
+      p.style.animationName = "floatUp, glow";
+      p.style.animationDuration = `${duration}s, ${Math.random() * 3 + 2}s`;
+      p.style.animationIterationCount = "infinite, infinite";
+      p.style.animationTimingFunction = "linear, ease-in-out";
+  }
 
     document.body.appendChild(p);
   }
