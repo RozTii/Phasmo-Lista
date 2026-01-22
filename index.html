@@ -163,27 +163,6 @@ html, body {
        0%, 100% { opacity: 0.3; filter: drop-shadow(0 0 0px white); }
        50% { opacity: 1; filter: drop-shadow(0 0 8px white); }
      }
-    
-     @keyframes parpadeoRelampago {
-       0% { background-color: rgba(0,0,0,0); }
-       10% { background-color: rgba(0,0,0,0.7); }
-       20% { background-color: rgba(0,0,0,0); }
-       30% { background-color: rgba(0,0,0,0.7); }
-       40% { background-color: rgba(0,0,0,0); }
-       50% { background-color: rgba(0,0,0,0.7); }
-       60% { background-color: rgba(0,0,0,0); }
-       70% { background-color: rgba(0,0,0,0.7); }
-       80% { background-color: rgba(0,0,0,0); }
-       100% { background-color: rgba(0,0,0,0); }
-     }
-
-     body.parpadeo {
-       animation: parpadeoRelampago 5s linear;
-     }
-
-     body.parpadeo .ghost img {
-       animation: parpadeoRelampago 5s linear;
-     }
   </style>
 </head>
 <body>
@@ -308,15 +287,6 @@ html, body {
       updateCounter();
     };
   });
-
-  function parpadeo() {
-    document.body.classList.add("parpadeo");
-    setTimeout(() => {
-      document.body.classList.remove("parpadeo");
-    }, 5000); // dura 3 segundos
-  }
-
-  setInterval(parpadeo, 30000);
   
   updateCounter();
 </script>
