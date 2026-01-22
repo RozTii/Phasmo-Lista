@@ -191,6 +191,11 @@ html, body {
         page.classList.remove("shake");
       }, 300);
 
+      document.body.classList.add("flicker");
+      setTimeout(() => {
+        document.body.classList.remove("flicker");
+      }, 600);
+
       updateCounter();
     };
   });
