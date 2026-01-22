@@ -149,11 +149,8 @@ html, body {
 
     .particle {
       position: fixed;
-      width: 12px;
-      height: 12px;
-      background: rgba(255,255,255,0.50);
-      border-radius: 50%;
       top: 100%;
+      border-radius: 50%;
       animation: floatUp linear infinite;
     }
 
@@ -204,23 +201,38 @@ html, body {
 
 </div>
 
-<div class="particle" style="left:5%; animation-duration:22s;"></div>
-<div class="particle" style="left:15%; animation-duration:25s;"></div>
-<div class="particle" style="left:25%; animation-duration:24s;"></div>
-<div class="particle" style="left:35%; animation-duration:27s;"></div>
-<div class="particle" style="left:45%; animation-duration:21s;"></div>
-<div class="particle" style="left:55%; animation-duration:29s;"></div>
-<div class="particle" style="left:65%; animation-duration:23s;"></div>
-<div class="particle" style="left:75%; animation-duration:32s;"></div>
-<div class="particle" style="left:85%; animation-duration:35s;"></div>
-<div class="particle" style="left:95%; animation-duration:30s;"></div>
-
 <audio id="clickSound" src="img/click.mp3" preload="auto"></audio>
 
 <script>
   const clickSound = document.getElementById("clickSound");
   const page = document.getElementById("page");
   const counter = document.getElementById("counter");
+
+  const NUM_PARTICLES = 50; // cantidad de partículas
+  for (let i = 0; i < NUM_PARTICLES; i++) {
+    const p = document.createElement("div");
+    p.classList.add("particle");
+
+    // posición horizontal aleatoria
+    p.style.left = Math.random() * 100 + "%";
+
+    // tamaño aleatorio
+    const size = Math.random() * 5 + 3;
+    p.style.width = size + "px";
+    p.style.height = size + "px";
+
+    // opacidad aleatoria
+    p.style.background = `rgba(255,255,255,${Math.random() * 0.5 + 0.2})`;
+
+    // duración aleatoria
+    const duration = Math.random() * 15 + 10;
+    p.style.animationDuration = duration + "s";
+
+    // retraso aleatorio
+    p.style.animationDelay = Math.random() * 15 + "s";
+
+    document.body.appendChild(p);
+  }
 
   function updateCounter() {
     const checked = document.querySelectorAll(".ghost.checked").length;
