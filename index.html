@@ -36,6 +36,24 @@ html, body {
       text-shadow: 0 0 8px rgba(255,255,255,0.4);
     }
 
+    #progressContainer {
+      width: 80%;
+      max-width: 600px;
+      height: 20px;
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      margin: 0 auto 20px auto;
+      overflow: hidden;
+    }
+
+    #progressBar {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #FFD700, #FFA500);
+      border-radius: 10px;
+      transition: width 0.5s ease-in-out;
+    }
+
     #counter {
       text-align: center;
       font-family: 'Cinzel', serif;
@@ -200,6 +218,11 @@ html, body {
 <div id="page">
 
 <h1>Phasmophobia Fantasmas</h1>
+
+<div id="progressContainer">
+  <div id="progressBar"></div>
+</div>
+
 <div id="counter">0 de 27 Fantasmas</div>
 
 <div class="grid">
@@ -279,6 +302,9 @@ html, body {
   function updateCounter() {
     const checked = document.querySelectorAll(".ghost.checked").length;
     const winSound = new Audio('img/logro.mp3');
+
+    let porcentaje = (checked / 27) * 100;
+    progressBar.style.width = porcentaje + "%";
 
     document.querySelectorAll('.gold-particle').forEach(p => p.remove());
 
