@@ -6,20 +6,22 @@
   <title>Phasmophobia Fantasmas</title>
 
   <style>
-    html, body {
-      min-height: 100vh;
-    }
 
-    #page {
-      position: relative;
-      z-index: 1;
-    }
+html, body {
+  min-height: 100vh;
+}
 
+#page {
+  position: relative;
+  z-index: 1;
+}
+    
     body {
       background-image: url("img/fondo.jpg");
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
+
       color: white;
       font-family: Arial, sans-serif;
       padding: 20px;
@@ -86,7 +88,7 @@
       filter: brightness(1.4) drop-shadow(0 0 12px rgba(255,255,255,0.6));
       transform: scale(1.03);
     }
-
+    
     .ghost.checked img {
       filter: grayscale(100%) brightness(20%);
     }
@@ -96,7 +98,7 @@
               drop-shadow(0 0 12px rgba(255,255,255,0.6));
       transform: scale(1.03);
     }
-
+    
     @keyframes shake {
       0%   { transform: translate(0, 0); }
       20%  { transform: translate(-4px, 2px); }
@@ -105,16 +107,116 @@
       80%  { transform: translate(4px, 2px); }
       100% { transform: translate(0, 0); }
     }
-
+    
     #page.shake {
       animation: shake 0.3s;
     }
 
-    /* Nueva parte para el modal de la lista */
-    #listButton {
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(
+        ellipse at center,
+        rgba(0,0,0,0) 55%,
+        rgba(0,0,0,0.65) 100%
+      );
+      z-index: 999;
+      animation: breathe 10s infinite alternate ease-in-out;
+    }
+    
+    @keyframes breathe {
+      0%, 100% { transform: scale(1); opacity: 0.65; }
+      50% { transform: scale(1.02); opacity: 0.7; }
+    }
+    
+    @keyframes flicker {
+      0%   { opacity: 1; }
+      20%  { opacity: 0.3; }
+      40%  { opacity: 1; }
+      60%  { opacity: 0.4; }
+      80%  { opacity: 1; }
+      100% { opacity: 1; }
+    }
+
+    body.flicker::after {
+      animation: flicker 0.6s, breathe 10s infinite alternate ease-in-out;
+    }
+
+    #footer {
+      position: fixed;
+      bottom: 10px;      
+      width: 100%;
+      text-align: center;
+      font-family: 'Cinzel', serif;
+      font-size: 14px;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: 1px;
+      pointer-events: none;  
+      z-index: 1000;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      25% { transform: translateY(-5px); }
+      50% { transform: translateY(0); }
+      75% { transform: translateY(-3px); }
+    }
+
+    .particle {
+      position: fixed;
+      top: 100%;
+      border-radius: 50%;
+      animation: floatUp linear infinite;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1); opacity: 0; }
+      10% { opacity: 0.3; }
+      100% { transform: translateY(-110vh) scale(0.5); opacity: 0; }
+     }
+    
+     @keyframes glow {
+       0%, 100% { opacity: 0.3; filter: drop-shadow(0 0 0px white); }
+       50% { opacity: 1; filter: drop-shadow(0 0 8px white); }
+     }
+
+     .gold-particle {
+       position: fixed;
+       top: 100%;
+       border-radius: 50%;
+       background: gold;
+       width: 6px;
+       height: 6px;
+       pointer-events: none;
+       animation: floatUpGold linear infinite;
+       z-index: 1000;
+     }
+
+     @keyframes floatUpGold {
+       0% { transform: translateY(0) scale(1); opacity: 0; }
+       20% { opacity: 1; }
+       100% { transform: translateY(-110vh) scale(0.5); opacity: 0; }
+     }
+
+     #footer {
+       position: fixed;
+       bottom: 10px;      
+       width: 100%;
+       text-align: center;
+       font-family: 'Cinzel', serif;
+       font-size: 14px;
+       color: rgba(255,255,255,0.7);
+       letter-spacing: 1px;
+       pointer-events: none;  
+       z-index: 1000;
+     }
+
+     #resetButton {
       position: fixed;
       bottom: 20px;
-      left: 20px;
+      right: 20px;
       padding: 10px 20px;
       font-family: 'Cinzel', serif;
       font-size: 18px;
@@ -128,57 +230,23 @@
       z-index: 1000;
     }
 
-    #listButton:hover {
+    #resetButton:hover {
       background-color: rgba(255, 215, 0, 0.8);
     }
 
-    #listButton:active {
+    #resetButton:active {
       transform: scale(0.95);
     }
 
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.8);
-      padding-top: 60px;
+    /* Animación al hacer clic */
+    @keyframes clickAnimation {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
     }
 
-    .modal-content {
-      background-color: #fefefe;
-      margin: 5% auto;
-      padding: 20px;
-      border: 1px solid #888;
-      width: 80%;
-      max-width: 600px;
-    }
-
-    .close {
-      color: #aaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-    }
-
-    .close:hover,
-    .close:focus {
-      color: black;
-      text-decoration: none;
-      cursor: pointer;
-    }
-
-    ul {
-      list-style-type: none;
-      padding: 0;
-    }
-
-    ul li {
-      margin: 10px 0;
-      font-size: 18px;
+    #resetButton.clicked {
+      animation: clickAnimation 0.3s ease-out;
     }
   </style>
 </head>
@@ -195,6 +263,7 @@
 <div id="counter">0 de 27 Fantasmas</div>
 
 <div class="grid">
+
   <div class="ghost"><img src="/Phasmo-Lista/img/banshee.png"></div>
   <div class="ghost"><img src="/Phasmo-Lista/img/demonio.png"></div>
   <div class="ghost"><img src="/Phasmo-Lista/img/ente.png"></div>
@@ -228,23 +297,6 @@
 
 <button id="resetButton">RESET</button>
 
-<!-- Nuevo botón "Lista" -->
-<button id="listButton">Lista</button>
-
-<!-- Modal de Lista -->
-<div id="listModal" class="modal">
-  <div class="modal-content">
-    <span id="closeModal" class="close">&times;</span>
-    <h2>Lista de Fantasmas</h2>
-
-    <h3>Fantasmas Encontrados</h3>
-    <ul id="foundList"></ul>
-
-    <h3>Fantasmas No Encontrados</h3>
-    <ul id="notFoundList"></ul>
-  </div>
-</div>
-
 <audio id="clickSound" src="img/click.mp3" preload="auto"></audio>
 
 <script>
@@ -252,56 +304,98 @@
   const page = document.getElementById("page");
   const counter = document.getElementById("counter");
   const progressBar = document.getElementById("progressBar");
+  
   const resetButton = document.getElementById("resetButton");
-  const listButton = document.getElementById("listButton");
-  const listModal = document.getElementById("listModal");
-  const closeModal = document.getElementById("closeModal");
-  const foundList = document.getElementById("foundList");
-  const notFoundList = document.getElementById("notFoundList");
-  const ghosts = document.querySelectorAll(".ghost");
 
   resetButton.addEventListener("click", () => {
+    // Añadir la animación de clic
     resetButton.classList.add("clicked");
     setTimeout(() => resetButton.classList.remove("clicked"), 300);
 
+    // Resetear todos los fantasmas a no seleccionados
     document.querySelectorAll(".ghost").forEach(ghost => {
       ghost.classList.remove("checked");
+      // Limpiar el localStorage
       const key = "phasmo_" + Array.from(ghost.parentElement.children).indexOf(ghost);
       localStorage.removeItem(key);
     });
 
+    // Resetear la barra de progreso y el contador
     progressBar.style.width = "0%";
     counter.textContent = "0 de 27 Fantasmas";
     counter.style.color = "white";
   });
 
-  listButton.addEventListener("click", () => {
-    listModal.style.display = "block";
-    updateLists();
-  });
+  const NUM_PARTICLES = 70; // cantidad de partículas
+  for (let i = 0; i < NUM_PARTICLES; i++) {
+    const p = document.createElement("div");
+    p.classList.add("particle");
 
-  closeModal.addEventListener("click", () => {
-    listModal.style.display = "none";
-  });
+    // posición horizontal aleatoria
+    p.style.left = Math.random() * 100 + "%";
 
-  function updateLists() {
-    foundList.innerHTML = "";
-    notFoundList.innerHTML = "";
+    // tamaño aleatorio
+    const size = Math.random() * 5 + 3;
+    p.style.width = size + "px";
+    p.style.height = size + "px";
 
-    ghosts.forEach((ghost, index) => {
-      const ghostName = ghost.querySelector('img').src.split('/').pop().replace('.png', '');
-      const listItem = document.createElement("li");
-      listItem.textContent = ghostName.charAt(0).toUpperCase() + ghostName.slice(1);
+    // opacidad aleatoria
+    p.style.background = `rgba(255,255,255,${Math.random() * 0.5 + 0.3})`;
 
-      if (ghost.classList.contains("checked")) {
-        foundList.appendChild(listItem);
-      } else {
-        notFoundList.appendChild(listItem);
-      }
-    });
+    // duración aleatoria
+    const duration = Math.random() * 15 + 10;
+    p.style.animationDuration = duration + "s";
+
+    // retraso aleatorio
+    p.style.animationDelay = Math.random() * 15 + "s";
+
+    // 20% de las partículas brillarán
+    if (Math.random() < 0.2) { 
+      p.style.animationName = "floatUp, glow";
+      p.style.animationDuration = `${duration}s, ${Math.random() * 3 + 2}s`;
+      p.style.animationIterationCount = "infinite, infinite";
+      p.style.animationTimingFunction = "linear, ease-in-out";
+    }
+
+    document.body.appendChild(p);
   }
 
-  ghosts.forEach((ghost, index) => {
+  function updateCounter() {
+    const checked = document.querySelectorAll(".ghost.checked").length;
+    const winSound = new Audio('img/logro.mp3');
+
+    let porcentaje = (checked / 27) * 100;
+    progressBar.style.width = porcentaje + "%";
+
+    document.querySelectorAll('.gold-particle').forEach(p => p.remove());
+
+    if (checked === 27) {
+    counter.textContent = "¡Todos los fantasmas encontrados!";
+    counter.style.color = "#FFD700"; // dorado brillante
+    winSound.play();
+
+    for (let i = 0; i < 50; i++) {
+      const p = document.createElement("div");
+      p.classList.add("gold-particle");
+      p.style.left = Math.random() * 100 + "%";
+      const size = Math.random() * 6 + 4;
+      p.style.width = size + "px";
+      p.style.height = size + "px";
+      const duration = Math.random() * 5 + 5;
+      p.style.animationDuration = duration + "s";
+      p.style.animationDelay = Math.random() * 2 + "s";
+      document.body.appendChild(p);
+    }
+    
+  } else {
+    counter.textContent = `${checked} de 27 Fantasmas`;
+    counter.style.color = "white";
+    // ocultar imagen y borrar partículas si no está completo
+    document.querySelectorAll('.gold-particle').forEach(p => p.remove());
+  }
+}
+  
+  document.querySelectorAll(".ghost").forEach((ghost, index) => {
     const key = "phasmo_" + index;
 
     if (localStorage.getItem(key) === "true") {
@@ -320,30 +414,19 @@
         page.classList.remove("shake");
       }, 300);
 
+      document.body.classList.add("flicker");
+      setTimeout(() => {
+        document.body.classList.remove("flicker");
+      }, 600);
+
       updateCounter();
     };
   });
-
-  function updateCounter() {
-    const checked = document.querySelectorAll(".ghost.checked").length;
-    const winSound = new Audio('img/logro.mp3');
-    let porcentaje = (checked / 27) * 100;
-    progressBar.style.width = porcentaje + "%";
-
-    if (checked === 27) {
-      counter.textContent = "¡Todos los fantasmas encontrados!";
-      counter.style.color = "#FFD700";
-      winSound.play();
-    } else {
-      counter.textContent = `${checked} de 27 Fantasmas`;
-      counter.style.color = "white";
-    }
-  }
-
+  
   updateCounter();
 </script>
 
-<div id="footer">Made by Rozti</div>
+  <div id="footer">Made by Rozti</div>
 
 </body>
 </html>
