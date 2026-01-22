@@ -36,6 +36,14 @@ html, body {
       text-shadow: 0 0 8px rgba(255,255,255,0.4);
     }
 
+    #counter {
+      text-align: center;
+      font-family: 'Cinzel', serif;
+      opacity: 0.85;
+      margin-bottom: 30px;
+      letter-spacing: 1px;
+    }
+
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -105,6 +113,7 @@ html, body {
 <div id="page">
 
 <h1>Phasmophobia Fantasmas</h1>
+<div id="counter">0 de 27 Fantasmas</div>
 
 <div class="grid">
 
@@ -144,6 +153,12 @@ html, body {
 <script>
   const clickSound = document.getElementById("clickSound");
   const page = document.getElementById("page");
+  const counter = document.getElementById("counter");
+
+  function updateCounter() {
+    const checked = document.querySelectorAll(".ghost.checked").length;
+    counter.textContent = `${checked} de 27 Fantasmas`;
+  }
   
   document.querySelectorAll(".ghost").forEach((ghost, index) => {
     const key = "phasmo_" + index;
