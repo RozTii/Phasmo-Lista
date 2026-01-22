@@ -106,6 +106,18 @@ html, body {
       );
       z-index: 999;
     }
+    @keyframes flicker {
+      0%   { opacity: 1; }
+      20%  { opacity: 0.3; }
+      40%  { opacity: 1; }
+      60%  { opacity: 0.4; }
+      80%  { opacity: 1; }
+      100% { opacity: 1; }
+    }
+
+    body.flicker::after {
+      animation: flicker 0.6s;
+    }
   </style>
 </head>
 <body>
