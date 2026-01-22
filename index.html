@@ -106,15 +106,12 @@ html, body {
         rgba(0,0,0,0.65) 100%
       );
       z-index: 999;
+      animation: breathe 10s infinite alternate ease-in-out;
     }
     
     @keyframes breathe {
       0%, 100% { transform: scale(1); opacity: 0.65; }
       50% { transform: scale(1.02); opacity: 0.7; }
-    }
-
-    body::after {
-      animation: breathe 10s infinite alternate ease-in-out;
     }
     
     @keyframes flicker {
@@ -152,9 +149,9 @@ html, body {
 
     .particle {
       position: fixed;
-      width: 3px;
-      height: 3px;
-      background: rgba(255,255,255,0.2);
+      width: 8px;
+      height: 8px;
+      background: rgba(255,255,255,0.35);
       border-radius: 50%;
       top: 100%;
       animation: floatUp linear infinite;
@@ -207,11 +204,16 @@ html, body {
 
 </div>
 
-<div class="particle" style="left:10%; animation-duration:15s;"></div>
-<div class="particle" style="left:30%; animation-duration:12s;"></div>
-<div class="particle" style="left:50%; animation-duration:18s;"></div>
-<div class="particle" style="left:70%; animation-duration:20s;"></div>
-<div class="particle" style="left:90%; animation-duration:16s;"></div>
+<div class="particle" style="left:5%; animation-duration:14s;"></div>
+<div class="particle" style="left:15%; animation-duration:12s;"></div>
+<div class="particle" style="left:25%; animation-duration:16s;"></div>
+<div class="particle" style="left:35%; animation-duration:18s;"></div>
+<div class="particle" style="left:45%; animation-duration:20s;"></div>
+<div class="particle" style="left:55%; animation-duration:13s;"></div>
+<div class="particle" style="left:65%; animation-duration:17s;"></div>
+<div class="particle" style="left:75%; animation-duration:15s;"></div>
+<div class="particle" style="left:85%; animation-duration:19s;"></div>
+<div class="particle" style="left:95%; animation-duration:12s;"></div>
 
 <audio id="clickSound" src="img/click.mp3" preload="auto"></audio>
 
@@ -222,8 +224,17 @@ html, body {
 
   function updateCounter() {
     const checked = document.querySelectorAll(".ghost.checked").length;
+    const winSound = new Audio('img/logro.mp3');
+
+    if (checked === 27) {
+    counter.textContent = "¡Todos los fantasmas encontrados!";
+    counter.style.color = "#FFD700"; // dorado brillante
+    winSound.play();
+  } else {
     counter.textContent = `${checked} de 27 Fantasmas`;
+    counter.style.color = "white"; // color normal
   }
+}
   
   document.querySelectorAll(".ghost").forEach((ghost, index) => {
     const key = "phasmo_" + index;
