@@ -107,6 +107,16 @@ html, body {
       );
       z-index: 999;
     }
+    
+    @keyframes breathe {
+      0%, 100% { transform: scale(1); opacity: 0.65; }
+      50% { transform: scale(1.02); opacity: 0.7; }
+    }
+
+    body::after {
+      animation: breathe 10s infinite alternate ease-in-out;
+    }
+    
     @keyframes flicker {
       0%   { opacity: 1; }
       20%  { opacity: 0.3; }
@@ -117,7 +127,7 @@ html, body {
     }
 
     body.flicker::after {
-      animation: flicker 0.6s;
+      animation: flicker 0.6s, breathe 10s infinite alternate ease-in-out;
     }
 
     #footer {
