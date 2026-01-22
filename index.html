@@ -118,6 +118,19 @@ html, body {
     body.flicker::after {
       animation: flicker 0.6s;
     }
+
+    #footer {
+      position: fixed;
+      bottom: 10px;      
+      width: 100%;
+      text-align: center;
+      font-family: 'Cinzel', serif;
+      font-size: 14px;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: 1px;
+      pointer-events: none;  
+      z-index: 1000;
+    }
   </style>
 </head>
 <body>
@@ -202,6 +215,8 @@ html, body {
   
   updateCounter();
 </script>
+
+  <div id="footer">Made by Rozti</div>
 
 </body>
 </html>
