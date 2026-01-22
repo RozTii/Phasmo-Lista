@@ -337,12 +337,11 @@ html, body {
   const screenshotButton = document.getElementById("screenshotButton");
 
   document.getElementById('screenshotButton').addEventListener('click', function () {
-  html2canvas(document.body).then(function (canvas) {
-    // Crea un enlace de descarga para la imagen
-    var link = document.createElement('a');
-    link.download = 'screenshot.png'; // Nombre del archivo
-    link.href = canvas.toDataURL('image/png'); // Convierte el canvas a una URL de imagen
-    link.click(); // Inicia la descarga
+      html2canvas(document.body).then(function (canvas) {
+          var link = document.createElement('a');
+          link.download = 'screenshot.png'; 
+          link.href = canvas.toDataURL('image/png'); 
+          link.click();
   });
 });
 
