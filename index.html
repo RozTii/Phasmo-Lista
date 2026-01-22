@@ -50,6 +50,18 @@
     .ghost.checked img {
       filter: grayscale(100%) brightness(20%);
     }
+    @keyframes shake {
+      0%   { transform: translate(0, 0); }
+      20%  { transform: translate(-4px, 2px); }
+      40%  { transform: translate(4px, -2px); }
+      60%  { transform: translate(-4px, -2px); }
+      80%  { transform: translate(4px, 2px); }
+      100% { transform: translate(0, 0); }
+    }
+    
+    .shake {
+      animation: shake 0.3s;
+    }
   </style>
 </head>
 <body>
@@ -88,7 +100,11 @@
 
 </div>
 
+<audio id="clickSound" src="img/click.mp3" preload="auto"></audio>
+
 <script>
+  const clickSound = document.getElementById("clickSound");
+  
   document.querySelectorAll(".ghost").forEach((ghost, index) => {
     const key = "phasmo_" + index;
 
@@ -99,6 +115,14 @@
     ghost.onclick = () => {
       ghost.classList.toggle("checked");
       localStorage.setItem(key, ghost.classList.contains("checked"));
+
+      clickSound.currentTime = 0;
+      clickSound.play();
+
+      document.body.classList.add("shake");
+      setTimeout(() => {
+        document.body.classList.remove("shake");
+      }, 300);
     };
   });
 </script>
